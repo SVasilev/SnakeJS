@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Snake in browser</title>
+		<link rel="stylesheet" type="text/css" href="/css/style.css" />
+		<script type="text/javascript" src="/lib/phaser/phaser.min.js"></script>
+		<script type="text/javascript" src="/lib/utils/presentation.js"></script>
+		<script type="text/javascript" src="/lib/jquery/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="/lib/game/Renderer.js"></script>
+		<script type="text/javascript" src="/lib/game/Ground.js"></script>
+		<script type="text/javascript" src="/lib/game/Snake.js"></script>
+		<script type="text/javascript">
+			var game = new Phaser.Game(1260, 720, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update,render: render });
+
+			function preload() {
+				game.load.image('empty', '../assets/img/game/empty.png');
+			    game.load.image('snakeHead', '../assets/img/game/snakeHead.gif');
+			    game.load.image('snakeBody', '../assets/img/game/snakeBody.png');
+			}
+
+			function create() {
+				this.ground = new Ground(21, 12);
+				this.snake  = new Snake({x: 5, y: 3}, this.ground);
+				this.renderer = new Renderer("Phaser");
+			    this.cursors = game.input.keyboard.createCursorKeys();
+
+				game.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT;
+			    game.scale.refresh();
+
+			    game.time.events.loop(Phaser.Timer.SECOND, function() { 
+			    	this.snake.move();
+			    }, this);
+			}
+
+			function update() {
+			    this.renderer.render(this);
+			}
+		
+			function render () {
+			    game.debug.inputInfo(32, 32);
+			}
+		</script>
+	</head>
+	<body>
+		<!--
+	    <div id="login" style="position: absolute; left: 40%; top: 50%;">
+	    	<div style="position: relative; left: -33%; top: -23vh;">
+				<div class="container">
+					<section id="content">
+						<form action="#">
+							<h1>Login or Register</h1>
+							<div> <input type="email" placeholder="E-mail" required id="email" autocomplete="off" /> </div> 
+							<div> <input type="password" placeholder="Password" required id="password" /> </div>
+							<div> <p id="exceptionText"> &nbsp; </p> </div>
+							<div> <button type="button" onclick="presentationUtils.registerUser()" > Continue </button> </div>
+						</form>
+					</section>
+				</div>
+			</div>
+	    </div>
+	      -->
+	</body>
+</html>
+
