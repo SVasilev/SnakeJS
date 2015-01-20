@@ -11,16 +11,15 @@
 		<script type="text/javascript" src="/lib/game/Ground.js"></script>
 		<script type="text/javascript" src="/lib/game/Snake.js"></script>
 		<script type="text/javascript">
-			var game = new Phaser.Game(1260, 720, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update,render: render });
+			var game = new Phaser.Game(1280, 720, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update,render: render });
 
 			function preload() {
-				game.load.image('empty', '../assets/img/game/empty.png');
 			    game.load.image('snakeHead', '../assets/img/game/snakeHead.gif');
 			    game.load.image('snakeBody', '../assets/img/game/snakeBody.png');
 			}
 
 			function create() {
-				this.ground = new Ground(21, 12);
+				this.ground = new Ground(32, 18);
 				this.snake  = new Snake({x: 5, y: 3}, this.ground);
 				this.renderer = new Renderer("Phaser");
 			    this.cursors = game.input.keyboard.createCursorKeys();
