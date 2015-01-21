@@ -10,29 +10,52 @@
 		<script type="text/javascript" src="/lib/game/Renderer.js"></script>
 		<script type="text/javascript" src="/lib/game/Ground.js"></script>
 		<script type="text/javascript" src="/lib/game/Snake.js"></script>
+
+	</head>
+	<body>
 		<script type="text/javascript">
 			var game = new Phaser.Game(1280, 720, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update,render: render });
 
 			function preload() {
-			    game.load.image('snakeHead', '../assets/img/game/snakeHead.gif');
 			    game.load.image('snakeBody', '../assets/img/game/snakeBody.png');
+			    game.load.image('snakeFruit', '../assets/img/game/40px-Fruit-cherries.svg.png');
 			}
 
 			function create() {
+				this.keysUnlocked = 1;
+				this.score = 0;
+				this.speed = 8;
+
 				this.ground = new Ground(32, 18);
-				this.snake  = new Snake({x: 5, y: 3}, this.ground);
+				this.snake  = new Snake({x: 5, y: 3}, 2);
 				this.renderer = new Renderer("Phaser");
 			    this.cursors = game.input.keyboard.createCursorKeys();
 
+			    game.time.events.loop(Phaser.Timer.SECOND / this.speed, function() {
+			    	this.snake.move(this);
+			    	this.keysUnlocked = 1;
+			    }, this);
+
+			    this.end = function() {
+					alert("Game ended with score: " + this.score);
+	            	location.reload();
+				}
+
+			    this.input.keyboard.createCursorKeys();
+
 				game.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT;
 			    game.scale.refresh();
+			}
 
-			    game.time.events.loop(Phaser.Timer.SECOND, function() { 
-			    	this.snake.move();
-			    }, this);
+			function keypressHandler(game) {					
+				if(game.input.keyboard.isDown(Phaser.Keyboard.UP)) if(game.keysUnlocked-- > 0) game.snake.setDirection("up");
+				if(game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) if(game.keysUnlocked-- > 0) game.snake.setDirection("down");
+				if(game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) if(game.keysUnlocked-- > 0) game.snake.setDirection("left");
+				if(game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) if(game.keysUnlocked-- > 0) game.snake.setDirection("right");
 			}
 
 			function update() {
+				keypressHandler(this);
 			    this.renderer.render(this);
 			}
 		
@@ -40,8 +63,7 @@
 			    game.debug.inputInfo(32, 32);
 			}
 		</script>
-	</head>
-	<body>
+
 		<!--
 	    <div id="login" style="position: absolute; left: 40%; top: 50%;">
 	    	<div style="position: relative; left: -33%; top: -23vh;">
