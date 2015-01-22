@@ -23,7 +23,28 @@
 				this.speed = 8	;
 
 				this.client = new Client();
-				this.client.executeQuery("startGame");
+
+				// this.playersNumber = 0;
+				// this.client.executeQuery("getPlayersCount", function(newArrayState, game) { 
+				// 	game.playersNumber = JSON.parse(newArrayState);
+				// }, this);
+
+				// this.playersNumber = 1;
+				// if(this.playersNumber == 0) {
+				// 	// Poll the second player to join
+				// 	if(confirm("Wait for second player?")) {
+				// 		this.startTheGame = false;
+				// 		while(!this.startTheGame) {
+				// 			this.client.executeQuery("startGame", function(newArrayState, game) { 
+				// 				if(newArrayState.indexOf("Waiting") > -1) { }//alert("NO"); }
+				// 				else { alert("Second Player Joined"); game.startTheGame = true; }
+				// 			}, this);
+				// 		}
+				// 	}
+				// }
+				// else {
+					this.client.executeQuery("startGame");
+				// }
 
 				this.groundState = [];
 				this.renderer = new Renderer("Phaser");
